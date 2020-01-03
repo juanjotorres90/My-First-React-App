@@ -7,3 +7,7 @@
   text-align: center;
   border-radius: 5px;
 }
+
+.Person input {
+  padding: 8px;
+}
