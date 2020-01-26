@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import "./App.css";
-import Person from "./Person/Person";
+import React, { Component } from 'react';
+import './App.css';
+import Radium, { StyleRoot } from 'radium';
+import Person from './Person/Person';
 
 class App extends Component {
   state = {
     persons: [
-      { id: "asfa1", name: "Juanjo", age: 29 },
-      { id: "vasdf1", name: "Max", age: 28 },
-      { id: "asdf11", name: "Stephanie", age: 26 }
+      { id: 'asfa1', name: 'Juanjo', age: 29 },
+      { id: 'vasdf1', name: 'Max', age: 28 },
+      { id: 'asdf11', name: 'Stephanie', age: 26 }
     ],
-    otherState: "some other value",
+    otherState: 'some other value',
     showPersons: false
   };
 
@@ -45,12 +46,20 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px 16px",
-      cursor: "pointer",
-      borderRadius: "5px"
+      backgroundColor: 'green',
+      color: '#fff',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px 16px',
+      cursor: 'pointer',
+      borderRadius: '5px',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: '#000'
+      },
+      ':focus': {
+        outline: 'none'
+      }
     };
 
     let persons = null;
@@ -71,20 +80,37 @@ class App extends Component {
           })}
         </div>
       );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: '#000'
+      };
     }
+
+    let classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
+
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <h2>By Juanjo</h2>
-        <p>This is really working!</p>
+        <p className={classes.join(' ')}>This is really working!</p>
         <button style={style} onClick={this.togglePersonsHandler}>
           Toggle Persons
         </button>
         {persons}
       </div>
+      </StyleRoot>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default Radium(App);
