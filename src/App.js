@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
+
 import Person from './Person/Person';
+
+const StyledButton = styled.button`
+      background-color: ${props => props.alt ? 'red' : 'green'};
+      color: #fff;
+      font: inherit;
+      border: 1px solid blue;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+        color: #000;
+      }
+
+      &:focus {
+        outline: none;
+      }
+`;
 
 class App extends Component {
   state = {
@@ -45,22 +65,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: '#fff',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px 16px',
-      cursor: 'pointer',
-      borderRadius: '5px',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: '#000'
-      },
-      ':focus': {
-        outline: 'none'
-      }
-    };
 
     let persons = null;
 
@@ -80,11 +84,6 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: '#000'
-      };
     }
 
     let classes = [];
@@ -97,20 +96,20 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
+
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <h2>By Juanjo</h2>
         <p className={classes.join(' ')}>This is really working!</p>
-        <button style={style} onClick={this.togglePersonsHandler}>
+        <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>
           Toggle Persons
-        </button>
+        </StyledButton>
         {persons}
       </div>
-      </StyleRoot>
+
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default Radium(App);
+export default App;
